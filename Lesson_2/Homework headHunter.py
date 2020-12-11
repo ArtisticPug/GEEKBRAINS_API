@@ -1,5 +1,8 @@
+import pandas as pd
+import openpyxl
 from bs4 import BeautifulSoup as bs
 import requests
+import json
 import time
 from pprint import pprint
 
@@ -117,7 +120,7 @@ if response.ok:
 
             completed_jobs_list.append(job_data)
             print(len(completed_jobs_list)) # Использовал, чтобы лучше наблюдать процесс
-            time.sleep(0.5)                 # Замедлял его с той же целью
+            #time.sleep(0.5)                 # Замедлял его с той же целью
         next_page = soup.find('a', {'class': 'bloko-button HH-Pager-Controls-Next HH-Pager-Control'})  # next_page['href'] = '/vacancies/data-engineer?page=1...'
         if next_page == None:                                                                          # нахожу кнопку "Дальше" и если ее нет - то обрываю цикл
             break
