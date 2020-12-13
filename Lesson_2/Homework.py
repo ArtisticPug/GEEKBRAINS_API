@@ -9,10 +9,12 @@ from pprint import pprint
 # https://hh.ru/vacancies/data-engineer
 # vacancy-serp__vacancy
 # job = '/data-engineer'
+# /pomoshnik_florista
+# /ekskursovod
 main_link = 'https://hh.ru'
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
-job = '/ekskursovod'
+job = '/pomoshnik_florista'
 link = f'{main_link}/vacancies{job}'
 
 response = requests.get(link, headers=headers)
@@ -129,8 +131,8 @@ if response.ok:
         link = f'{main_link}{next_page["href"]}'  # подставляю обновленную ссылку на следующую страницу
         response = requests.get(link, headers=headers)
         soup = bs(response.text, 'html.parser')  # Заменяю суп на свежий
-    with open("HeadHunterResultsTest.json", "w") as write_HHtest:
+    with open("HeadHunterResultsTest2.json", "w") as write_HHtest:
         json.dump(completed_jobs_list, write_HHtest)
 
 df = pd.DataFrame(completed_jobs_list)
-df.to_excel("testHHoutput.xlsx")
+df.to_excel("testHHoutput2.xlsx")
