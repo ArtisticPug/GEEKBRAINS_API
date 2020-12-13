@@ -1,6 +1,8 @@
 from pprint import pprint
 from pymongo import MongoClient
 import json
+from HHsearch import hhsearch
+from SJsearch import sjsearch
 
 def salary_search(var_1):
     # Возвращает список вакансий с минимальной ИЛИ максимальной ЗП больше var_1.
@@ -34,17 +36,22 @@ db = client['jobs']
 hh = db.headhunter  # Ссылки на коллекции в MONGO
 sj = db.superjob
 
-with open("HeadHunterResults.json", "r") as read_HH:  #Беру json из которого буду добавлять новые вакансии
-    read_HH = json.load(read_HH)
+# '/?keywords=Python&noGeo=1' Для поиска на суперджоб
+# '/data-engineer' Для поиска на суперджоб
+hhsearch('/data-engineer', 'HHResults')
+sjsearch('/?keywords=Python&noGeo=1', 'SJResults')
 
-pprint(salary_search(100000)[0])
+with open("HHResults.json", "r") as read_HH:  #Беру json из которого буду добавлять новые вакансии
+    read_HH = json.load(read_HH)
 
 add_new_jobs(hh, read_HH)  # hh - коллекция, read_HH - json.load (список словарей)
 
-with open("SuperjobResults.json", "r") as read_SJ:
+with open("SJResults.json", "r") as read_SJ:
     read_SJ = json.load(read_SJ)
 
 add_new_jobs(sj, read_SJ)  # sj - коллекция, read_SJ - json.load (список словарей)
+
+pprint(salary_search(100000)[0])
 
 # db.inventory.find( { $or: [ { status: "A" }, { qty: { $lt: 30 } } ] } )
 # db.inventory.find( { status: { $in: [ "A", "D" ] } } )
