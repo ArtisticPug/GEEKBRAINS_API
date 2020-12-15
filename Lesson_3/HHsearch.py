@@ -31,14 +31,12 @@ def hhsearch(searchhh, filename):  # Принимает часть поиско�
                 name = job_name.text
                 job_data['name'] = name
 
-                job_pay = job_list_item.find('span',
-                                             {'data-qa': 'vacancy-serp__vacancy-compensation'})  # Нахожу зарплату вакансии
+                job_pay = job_list_item.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})  # Нахожу зарплату вакансии
                 if job_pay is not None:
                     pay = job_pay.text
                     payment = []
                     currency = []
-                    if pay.count('до') == 0 and pay.count('от') == 0 and pay.count(
-                            '-') != 0:  # Проверяю формат в котором представлена зарплата: 1) Полный 100 - 200 руб
+                    if pay.count('до') == 0 and pay.count('от') == 0 and pay.count('-') != 0:  # Проверяю формат в котором представлена зарплата: 1) Полный 100 - 200 руб
                         for elem in pay.split('-'):
                             min_max_pay = []
                             pre_currency = []
