@@ -75,7 +75,9 @@ def mailru_news():
         response = requests.get(url, headers=header)
         dom = html.fromstring(response.text)
 
-        items = dom.xpath("//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]//div[contains(@class, 'daynews__item')] | //div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]/ul/li")
+        items = dom.xpath("//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]//div[contains(@class, 'daynews__item')]"
+                          " | "
+                          "//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]/ul/li")
         for item in items:
             item_url = item.xpath("./a/@href")
             irem_response = requests.get(item_url[0])
