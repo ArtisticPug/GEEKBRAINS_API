@@ -11,8 +11,7 @@ from pprint import pprint
 # vacancy-serp__vacancy
 def hhsearch(searchhh, filename):  # Принимает часть поисковой строки с параметрами и имя для json файла
     main_link = 'https://hh.ru'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
     job = searchhh
     link = f'{main_link}/vacancies{job}'
 
