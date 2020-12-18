@@ -75,18 +75,16 @@ def mailru_news():
         response = requests.get(url, headers=header)
         dom = html.fromstring(response.text)
 
-        items = dom.xpath("//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]//div[contains(@class, 'daynews__item')]"
-                          " | "
-                          "//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]/ul/li")
+        items = dom.xpath("//div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]//div[contains(@class, 'daynews__item')] | //div[contains(@class, 'js-module') and contains(@name, 'clb20268335') and contains(@data-module, 'TrackBlocks')]/ul/li")
         for item in items:
             item_url = item.xpath("./a/@href")
             irem_response = requests.get(item_url[0])
             item_dom = html.fromstring(irem_response.text)
             top_news = {}
 
-            source = item_dom.xpath(".//div[contains(@class, 'article js-article js-module')]/*[1]//span[contains(@class, 'link__text')]/text()")
-            name = item_dom.xpath(".//div[contains(@class, 'article js-article js-module')]/*[2]//h1[contains(@class, 'hdr__inner')]/text()")
-            date = item_dom.xpath(".//div[contains(@class, 'article js-article js-module')]/*//span[@datetime]/@datetime")
+            source = item_dom.xpath(".//div[contains(@class, 'article js-article')]/*//span[contains(@class, 'link__text')]/text()")
+            name = item_dom.xpath(".//div[contains(@class, 'article js-article')]/*[2]//h1[contains(@class, 'hdr__inner')]/text()")
+            date = item_dom.xpath(".//div[contains(@class, 'article js-article')]/*//span[@datetime]/@datetime")
 
             top_news['source'] = source[0]
             top_news['name'] = name[0]
