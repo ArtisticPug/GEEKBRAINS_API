@@ -111,4 +111,4 @@ for link in link_list:
     except:
         pass
 print(f'из {timer2} писем, добавлено {timer} новых в базу {mailru}')
-driver.close()
+driver.close()  # Этот метод показался более надежным
