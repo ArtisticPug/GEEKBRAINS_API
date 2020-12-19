@@ -56,5 +56,12 @@ button = WebDriverWait(driver,10).until(
 button.click()
 
 elem = WebDriverWait(driver,10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]")) # Открываю первое письмо
+            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')]")) # Открываю первое письмо
         )
+
+while True:  # //a[contains(@class, 'llc')][last()] когда последний ребенок будет такой нужно прервать цикл
+
+    actions = ActionChains(driver)
+    actions.move_by_offset(100, 100)
+    # actions.key_down(Keys.Ctrl).key_down(Keys.C).key_up(Keys.Ctrl).key_up(Keys.C)
+    actions.move_to_element(articles[-1])
