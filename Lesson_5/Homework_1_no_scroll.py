@@ -113,15 +113,4 @@ while True:
         print(f'из {timer2} писем, добавлено {timer} новых в базу {mailru}\nFinished or Error occurred')
         break
 
-
-
-
-
-
-
-# elem = driver.find_element_by_xpath("//a[contains(@class, 'llc')][1]")
-# driver.get(elem.get_attribute('href'))
-#
-# time.sleep(2)
-#
-# print(driver.find_element_by_class_name('letter__body').text)
+driver.close()
