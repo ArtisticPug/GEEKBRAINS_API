@@ -11,22 +11,18 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-
 import time
 from pprint import pprint
 import re
 
+
 chrome_options = Options()
 chrome_options.add_argument('start-maximized')
 driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=chrome_options)
-
-letter_list = []
-
 driver.get('https://mail.ru')
 
 elem = driver.find_element_by_class_name('email-input')
@@ -47,7 +43,10 @@ elem = WebDriverWait(driver,10).until(
             EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]")) # Открываю первое письмо
         )
 driver.get(elem.get_attribute('href'))
+
 timer = 0
+letter_list = []
+
 while True:
     try:
         letter = {}
@@ -76,6 +75,7 @@ while True:
             if el == '':
                 text.remove(el)
         letter['text_full'] = ' '.join(text)
+
         letter_list.append(letter.copy())
         letter.clear()
         timer+=1
@@ -85,9 +85,11 @@ while True:
             EC.element_to_be_clickable((By.XPATH, "//span[contains(@data-title-shortcut, 'Ctrl+↓')]"))
         )
         button.click() # Вместо скролинга кнопкой письма листаю
+
         time.sleep(1) # Вот этот таймер спасает от ошибок
+
     except:
-        print('Finished of Error')
+        print('Finished or Error')
         break
 
 
