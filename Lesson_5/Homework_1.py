@@ -15,10 +15,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from pymongo import MongoClient
 import time
 from pprint import pprint
 import re
 
+
+def add_new_letters(db, list):
+    # В качестве аргумента принимает переменную содержащую в себе коллекцию в MONGO и переменныю с списокм
+    a = 0
+    for el in list:
+        db.insert_one(el)
+        a = a + 1
+    print(f'Added {a} letters to {str(db)}')  # Выдает сообщение о том, сколько было добавлено новостей
+
+
+client = MongoClient('127.0.0.1', 27017)
+db = client['email']
+mailru = db.mailru
 
 chrome_options = Options()
 chrome_options.add_argument('start-maximized')
@@ -32,7 +46,9 @@ button = WebDriverWait(driver,10).until(
         )
 button.click()
 
-elem = driver.find_element_by_class_name('password-input')
+elem = WebDriverWait(driver,10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'password-input'))
+        )
 elem.send_keys('NextPassword172')
 button = WebDriverWait(driver,10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, 'second-button'))
@@ -45,7 +61,6 @@ elem = WebDriverWait(driver,10).until(
 driver.get(elem.get_attribute('href'))
 
 timer = 0
-letter_list = []
 
 while True:
     try:
@@ -76,10 +91,13 @@ while True:
                 text.remove(el)
         letter['text_full'] = ' '.join(text)
 
-        letter_list.append(letter.copy())
-        letter.clear()
-        timer+=1
-        print(timer)
+        try:
+            mailru.insert_one(letter)
+            timer += 1
+            print(timer)
+        except:
+            pass
+
 
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[contains(@data-title-shortcut, 'Ctrl+↓')]"))
@@ -89,8 +107,13 @@ while True:
         time.sleep(1) # Вот этот таймер спасает от ошибок
 
     except:
-        print('Finished or Error')
+        print(f'\nFinished or Error')
         break
+
+
+
+
+
 
 
 # elem = driver.find_element_by_xpath("//a[contains(@class, 'llc')][1]")
