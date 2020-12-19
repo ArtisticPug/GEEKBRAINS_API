@@ -44,7 +44,7 @@ button = WebDriverWait(driver,10).until(
 button.click()
 
 elem = WebDriverWait(driver,10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]"))
+            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]")) # Открываю первое письмо
         )
 driver.get(elem.get_attribute('href'))
 timer = 0
@@ -63,7 +63,7 @@ while True:
         theme = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.XPATH, '//h2'))
         )
-        letter['theme'] = theme.text
+        letter['theme'] = theme.text  # Вот на этом элементе ошибка возникает, но всегда на разном письме
         elem = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'letter__body'))
         )
@@ -80,8 +80,8 @@ while True:
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[contains(@data-title-shortcut, 'Ctrl+↓')]"))
         )
-        button.click()
-        time.sleep(1)
+        button.click() # Вместо скролинга кнопкой письма листаю
+        time.sleep(1) # Вот этот таймер спасает от ошибок
     except:
         print('Finished of Error')
         break
