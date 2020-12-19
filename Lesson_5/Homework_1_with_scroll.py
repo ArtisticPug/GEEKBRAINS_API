@@ -3,11 +3,6 @@
 # Логин тестового ящика: study.ai_172@mail.ru
 # Пароль тестового ящика: NextPassword172
 
-# button = WebDriverWait(driver,10).until(
-#             EC.presence_of_element_located((By.CLASS_NAME, 'second-button'))
-#         )
-
-# actions.key_down(Keys.Ctrl).key_down(Keys.C).key_up(Keys.Ctrl).key_up(Keys.C)
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -21,15 +16,6 @@ from pymongo import MongoClient
 import time
 from pprint import pprint
 import re
-
-
-def add_new_letters(db, list):
-    # В качестве аргумента принимает переменную содержащую в себе коллекцию в MONGO и переменныю с списокм
-    a = 0
-    for el in list:
-        db.insert_one(el)
-        a = a + 1
-    print(f'Added {a} letters to {str(db)}')  # Выдает сообщение о том, сколько было добавлено новостей
 
 
 client = MongoClient('127.0.0.1', 27017)
@@ -91,7 +77,7 @@ timer2 = 0
 for link in link_list:
     elem = driver.get(link)
     letter = {}
-    letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+    letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]  # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
 
     sender = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
@@ -108,7 +94,7 @@ for link in link_list:
     )
     letter['theme'] = theme.text
 
-    elem = WebDriverWait(driver, 10).until(  # Вот на этом элементе ошибка возникает, но всегда на разном письме
+    elem = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.CLASS_NAME, 'letter__body'))
     )
     text = elem.text.replace('\n', ' ').split(' ')

@@ -3,9 +3,6 @@
 # Логин тестового ящика: study.ai_172@mail.ru
 # Пароль тестового ящика: NextPassword172
 
-# button = WebDriverWait(driver,10).until(
-#             EC.presence_of_element_located((By.CLASS_NAME, 'second-button'))
-#         )
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -66,7 +63,7 @@ letter_list = []
 while True:
     try:
         letter = {}
-        letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+        letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]  # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
 
         sender = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
@@ -83,7 +80,7 @@ while True:
         )
         letter['theme'] = theme.text
 
-        elem = WebDriverWait(driver, 10).until(  # Вот на этом элементе ошибка возникает, но всегда на разном письме
+        elem = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'letter__body'))
         )
         text = elem.text.replace('\n', ' ').split(' ')
@@ -105,7 +102,7 @@ while True:
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[contains(@data-title-shortcut, 'Ctrl+↓')]"))
         )
-        button.click() # Вместо скролинга кнопкой письма листаю
+        button.click() # Вместо скролинга использована кнопка "следущее письмо"
 
         time.sleep(0.8) # Вот этот таймер спасает от ошибок
 
