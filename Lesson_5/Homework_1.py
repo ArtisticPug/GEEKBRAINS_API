@@ -50,7 +50,7 @@ letter_list = []
 while True:
     try:
         letter = {}
-        letter['id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+        letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
 
         sender = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
