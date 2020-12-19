@@ -52,19 +52,23 @@ while True:
     try:
         letter = {}
         letter['id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+
         sender = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
         )
         letter['from'] = sender.text
+
         date = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'letter__date'))
         )
         letter['date'] = date.text
+
         theme = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.XPATH, '//h2'))
         )
-        letter['theme'] = theme.text  # Вот на этом элементе ошибка возникает, но всегда на разном письме
-        elem = WebDriverWait(driver, 10).until(
+        letter['theme'] = theme.text
+
+        elem = WebDriverWait(driver, 10).until(  # Вот на этом элементе ошибка возникает, но всегда на разном письме
             EC.visibility_of_element_located((By.CLASS_NAME, 'letter__body'))
         )
         text = elem.text.replace('\n', ' ').split(' ')
