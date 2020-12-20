@@ -44,13 +44,15 @@ button = WebDriverWait(driver,10).until(
 button.click()
 
 elem = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')]"))  # Список писем видимых на странице
+        EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')]"))
+        # Список писем видимых на странице
     )
 
 timer = 0
 link_list = []
 end = None
-while end == None:  # //a[contains(@class, 'list-letter-spinner')] когда последний ребенок будет таким нужно прервать цикл
+while end == None:
+    # //a[contains(@class, 'list-letter-spinner')] когда последний ребенок будет таким нужно прервать цикл
     try:
         try:
             end = driver.find_element_by_class_name('list-letter-spinner')
@@ -77,7 +79,8 @@ timer2 = 0
 for link in link_list:
     elem = driver.get(link)
     letter = {}
-    letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]  # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
+    letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+    # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
 
     sender = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
@@ -111,4 +114,6 @@ for link in link_list:
     except:
         pass
 print(f'из {timer2} писем, добавлено {timer} новых в базу {mailru}')
-driver.close()  # Этот метод показался более надежным
+driver.close()
+
+# Этот метод показался более надежным

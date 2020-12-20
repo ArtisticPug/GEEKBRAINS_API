@@ -18,15 +18,6 @@ from pprint import pprint
 import re
 
 
-def add_new_letters(db, list):
-    # В качестве аргумента принимает переменную содержащую в себе коллекцию в MONGO и переменныю с списокм
-    a = 0
-    for el in list:
-        db.insert_one(el)
-        a = a + 1
-    print(f'Added {a} letters to {str(db)}')  # Выдает сообщение о том, сколько было добавлено новостей
-
-
 client = MongoClient('127.0.0.1', 27017)
 db = client['email']
 mailru = db.mailru
@@ -53,7 +44,8 @@ button = WebDriverWait(driver,10).until(
 button.click()
 
 elem = WebDriverWait(driver,10).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]")) # Открываю первое письмо
+            EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'llc')][1]"))
+            # Открываю первое письмо
         )
 driver.get(elem.get_attribute('href'))
 
@@ -63,7 +55,8 @@ letter_list = []
 while True:
     try:
         letter = {}
-        letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]  # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
+        letter['_id'] = re.findall(r'0:\d+:0', driver.current_url)[0]
+        # В ссылке есть айди письма, которое использую в качестве айди при добавлении в БД
 
         sender = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'letter-contact'))
@@ -102,15 +95,18 @@ while True:
         button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[contains(@data-title-shortcut, 'Ctrl+↓')]"))
         )
-        button.click() # Вместо скролинга использована кнопка "следущее письмо"
+        button.click()
+        # Вместо скролинга использована кнопка "следущее письмо"
 
-        time.sleep(0.8) # Вот этот таймер спасает от ошибок
+        time.sleep(0.8)
+        # Вот этот таймер спасает от ошибок
 
     except:
         print(f'из {timer2} писем, добавлено {timer} новых в базу {mailru}\nFinished or Error occurred')
         break
 
 driver.close()
+
 # В этом методе часто возникала ошибка, возникавшая из-за того, что код начинал обрабатывать блоки до того как они обновились
 # В итоге выдавал ошибку что элементы не имеют отношения к текущей странице
 # Пришлось ставить таймер
