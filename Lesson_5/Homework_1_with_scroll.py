@@ -72,7 +72,6 @@ while end == None:
     except:
         print('ERROR')
 
-print(len(link_list))
 timer = 0
 timer2 = 0
 
