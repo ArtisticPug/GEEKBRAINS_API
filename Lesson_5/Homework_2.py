@@ -23,7 +23,6 @@ chrome_options.add_argument('start-maximized')
 driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=chrome_options)
 driver.get('https://www.mvideo.ru/')
 
-# buttons = driver.find_elements_by_xpath("//div[contains(text(),'Хиты продаж')]//ancestor::div[contains(@class, 'gallery-layout_product-set')]//a[contains(@class, 'next-btn')]")
 for i in range(3):  # Кликаю по кнопке чтобы в HTML попали все эелементы карусели
     button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Хиты продаж')]//ancestor::div[contains(@class,'gallery-layout_product-set')]//a[contains(@class,'next-btn')]"))
