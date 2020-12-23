@@ -17,7 +17,7 @@ class LabirintSpider(scrapy.Spider):
     allowed_domains = ['labirint.ru']
     start_urls = ['https://www.labirint.ru/search/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/']
 
-    def parse(self, response:HtmlResponse):
+    def parse(self, response: HtmlResponse):
         book_links = response.xpath("//a[@class = 'cover']/@href").extract()
 
         for link in book_links:
@@ -27,7 +27,7 @@ class LabirintSpider(scrapy.Spider):
         if next_page:
             yield response.follow(next_page, callback=self.parse)
 
-    def book_parse(self, response:HtmlResponse):
+    def book_parse(self, response: HtmlResponse):
         _id = response.xpath("//div[@class='articul']/text()").extract_first()
         book_url = response.url
         name = response.xpath("//div[@id ='product-title']/h1/text()").extract_first()
