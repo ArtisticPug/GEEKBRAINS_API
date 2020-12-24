@@ -13,6 +13,6 @@ class HomeworkparserItem(scrapy.Item):
     book_url = scrapy.Field()
     name = scrapy.Field()
     author = scrapy.Field()
-    price = scrapy.Field()
-    discount = scrapy.Field()
+    old_price = scrapy.Field()
+    new_price = scrapy.Field()
     rating = scrapy.Field()

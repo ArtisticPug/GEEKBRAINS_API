@@ -16,14 +16,23 @@ class HomeworkparserPipeline:
         self.db = client['books']
 
     def process_item(self, item, spider):
-        if spider.name == 'labirint':
-            item['_id'] = self.process_id(item['_id'])
-            collection = self.db[spider.name]
+        item['_id'] = self.process_to_int(item['_id'])
+        item['old_price'] = self.process_to_int(item['old_price'])
+        item['new_price'] = self.process_to_int(item['new_price'])
+        item['rating'] = self.process_to_float(item['rating'])
+        collection = self.db[spider.name]
+        try:
             collection.insert_one(item)
-
+        except:
+            pass
         return item
 
-    def process_id(self, _id):
-        _id = int(re.search(r'\d+', f'{_id}').group(0))
-        return _id
+    def process_to_int(self, value):
+        if value != None:
+            value = int(re.search(r'\d+', f"{value.replace(' ', '')}").group())
+        return value
 
+    def process_to_float(self, value):
+        if value != None:
+            value = float(value.replace(',', '.'))
+        return value
