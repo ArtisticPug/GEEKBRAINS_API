@@ -1,6 +1,7 @@
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 
+
 from Lesson_7.leroy_merlin.spiders.Leroy_the_spider import LeroyTheSpiderSpider
 from Lesson_7.leroy_merlin import settings
 
