@@ -8,7 +8,7 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'leroy_merlin'
-IMAGES_STORE = 'Images'
+IMAGES_STORE = 'images'
 
 SPIDER_MODULES = ['Lesson_7.leroy_merlin.spiders']
 NEWSPIDER_MODULE = 'Lesson_7.leroy_merlin.spiders'
