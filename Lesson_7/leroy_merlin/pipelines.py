@@ -31,8 +31,6 @@ class LMImagesPipeLine(ImagesPipeline):
         return f'full/{item["_id"]}/{image_guid}.jpg'
 
 
-
-
 class LeroyMerlinPipeline:
 
     def __init__(self):
