@@ -16,7 +16,7 @@ import re
 from scrapy.loader.processors import MapCompose, TakeFirst
 
 
-def process_to_int(value):
+def process_to_int(value):  # Преобразую в int то, что получается преобразовать без особой обработки
     try:
         if value != None:
             value = int(re.search(r'\d+', f"{value.replace(' ', '')}").group())
@@ -25,7 +25,7 @@ def process_to_int(value):
         print(e)
 
 
-def process_info_item(value):
+def process_to_float(value):  # Преобразую во float то, что получается преобразовать без особой обработки
     try:
         new_value =[]
         try:
@@ -42,11 +42,11 @@ def process_info_item(value):
 
 class LeroyMerlinItem(scrapy.Item):
     # define the fields for your item here like:
-    _id = scrapy.Field(input_processor=MapCompose(process_to_int), output_processor=TakeFirst())
+    _id = scrapy.Field(input_processor=MapCompose(process_to_int), output_processor=TakeFirst())  # _id он же артикул товара
     name = scrapy.Field(output_processor=TakeFirst())
     images = scrapy.Field(input_processor=MapCompose())
     info_key = scrapy.Field(output_processor=MapCompose())
-    info_item = scrapy.Field(output_processor=MapCompose(process_info_item))
+    info_item = scrapy.Field(output_processor=MapCompose(process_to_float))  # Беру весь список
     info = scrapy.Field()
     link = scrapy.Field(output_processor=TakeFirst())
-    price = scrapy.Field(input_processor=MapCompose(process_to_int), output_processor=TakeFirst())
+    price = scrapy.Field(input_processor=MapCompose(process_to_float), output_processor=TakeFirst())  # Беру первое значение

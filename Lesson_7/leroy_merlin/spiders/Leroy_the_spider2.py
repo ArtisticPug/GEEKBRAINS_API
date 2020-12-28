@@ -12,12 +12,12 @@ from Lesson_7.leroy_merlin.items import LeroyMerlinItem
 from scrapy.loader import ItemLoader
 
 
-class LeroyTheSpiderSpider(scrapy.Spider):
-    name = 'Leroy_the_spider'
+class LeroyTheSpiderSpider2(scrapy.Spider):
+    name = 'Leroy_the_spider2'
     allowed_domains = ['leroymerlin.ru']
 
     def __init__(self, search):
-        super(LeroyTheSpiderSpider, self).__init__()
+        super(LeroyTheSpiderSpider2, self).__init__()
         self.start_urls = [f'https://leroymerlin.ru/search/?q={search}']
 
     def parse(self, response:HtmlResponse):

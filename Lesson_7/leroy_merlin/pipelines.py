@@ -6,10 +6,10 @@
 
 # useful for handling different item types with a single interface
 import scrapy
-import hashlib
+import hashlib  # Подключаю модуль, чтобы изменить работу file_path
 from pymongo import MongoClient
 from scrapy.pipelines.images import ImagesPipeline
-from scrapy.utils.python import to_bytes
+from scrapy.utils.python import to_bytes  # Подключаю модуль, чтобы изменить работу file_path
 
 
 class LMImagesPipeLine(ImagesPipeline):
@@ -26,7 +26,7 @@ class LMImagesPipeLine(ImagesPipeline):
         item['images'] = [itm[1] for itm in results if itm[0]]
         return item
 
-    def file_path(self, request, response=None, info=None, *, item=None):
+    def file_path(self, request, response=None, info=None, *, item=None):  # В качестве пути и названия файла используется артикул(_id) и хеш соответственно
         image_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
         return f'full/{item["_id"]}/{image_guid}.jpg'
 
@@ -38,10 +38,10 @@ class LeroyMerlinPipeline:
         self.db = client['LeroyMerlin']
 
     def process_item(self, item, spider):
-        t = len(item['info_key'])
-        item['info'] = self.process_info(item['info_key'], item['info_item'], t)
-        del item['info_key']
-        del item['info_item']
+        t = len(item['info_key'])  # Для того, чтобы объединить поля получаю длину списка ключей, чтобы для каждого имеющегося ключа подобрать значение
+        item['info'] = self.process_info(item['info_key'], item['info_item'], t)  # Получаю поля содержащие в себе ключ: значение
+        del item['info_key']  # Убираю более не нужные поля содержащие в себе ключи
+        del item['info_item'] # Убираю более не нужные поля содержащие в себе значения
 
         collection = self.db[spider.name]
         try:
@@ -50,7 +50,7 @@ class LeroyMerlinPipeline:
             pass
         return item
 
-    def process_info(self, key, item, t):
+    def process_info(self, key, item, t):  # Объединяю список ключей со списком значений
         list = {}
         for el in range(t):
             list.update({key[el].replace('\n', '').replace('  ', ''): item[el]})
