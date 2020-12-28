@@ -8,8 +8,8 @@ from Lesson_7.leroy_merlin import settings
 if __name__ == '__main__':
     crawler_settings = Settings()
     crawler_settings.setmodule(settings)
-
+    search = 'ковер'
     process = CrawlerProcess(settings=crawler_settings)
-    process.crawl(LeroyTheSpiderSpider, search = 'ковер')
+    process.crawl(LeroyTheSpiderSpider, search)
 
     process.start()

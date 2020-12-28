@@ -35,24 +35,23 @@ class LeroyMerlinPipeline:
 
     def __init__(self):
         client = MongoClient('127.0.0.1', 27017)
-        self.db = client['leroy']
+        self.db = client['LeroyMerlin']
 
     def process_item(self, item, spider):
         t = len(item['info_key'])
-        item['info'] = {}
-        item['info'] = self.process_info(item['info'], item['info_key'], item['info_item'], t)
+        item['info'] = self.process_info(item['info_key'], item['info_item'], t)
         del item['info_key']
         del item['info_item']
 
-        collection = self.db['Leroy_kover_boi']
+        collection = self.db[spider.name]
         try:
             collection.insert_one(item)
         except:
             pass
         return item
 
-    def process_info(self, list, key, item, t):
+    def process_info(self, key, item, t):
         list = {}
         for el in range(t):
-            list.update({key[el].replace('\n', '').replace('  ', ''): item[el].replace('\n', '').replace('  ', '')})
+            list.update({key[el].replace('\n', '').replace('  ', ''): item[el]})
         return list

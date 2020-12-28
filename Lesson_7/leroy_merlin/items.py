@@ -17,9 +17,27 @@ from scrapy.loader.processors import MapCompose, TakeFirst
 
 
 def process_to_int(value):
-    if value != None:
-        value = int(re.search(r'\d+', f"{value.replace(' ', '')}").group())
-    return value
+    try:
+        if value != None:
+            value = int(re.search(r'\d+', f"{value.replace(' ', '')}").group())
+        return value
+    except Exception as e:
+        print(e)
+
+
+def process_info_item(value):
+    try:
+        new_value =[]
+        try:
+            value = value.replace('\n', '').replace('  ', '')
+            if value.isdigit:
+                value = float(value)
+                new_value.append(value)
+        except:
+            new_value.append(value)
+        return new_value
+    except Exception as e:
+        print(e)
 
 
 class LeroyMerlinItem(scrapy.Item):
@@ -28,7 +46,7 @@ class LeroyMerlinItem(scrapy.Item):
     name = scrapy.Field(output_processor=TakeFirst())
     images = scrapy.Field(input_processor=MapCompose())
     info_key = scrapy.Field(output_processor=MapCompose())
-    info_item = scrapy.Field(output_processor=MapCompose())
+    info_item = scrapy.Field(output_processor=MapCompose(process_info_item))
     info = scrapy.Field()
     link = scrapy.Field(output_processor=TakeFirst())
     price = scrapy.Field(input_processor=MapCompose(process_to_int), output_processor=TakeFirst())
