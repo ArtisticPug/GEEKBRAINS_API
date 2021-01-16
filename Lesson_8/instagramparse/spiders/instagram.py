@@ -13,7 +13,7 @@ class InstagramSpider(scrapy.Spider):
     start_urls = ['https://www.instagram.com/']
 
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
-    inst_login = 'THE LOGIN WA HERE!'
+    inst_login = 'THE LOGIN WAS HERE!'
     inst_password = 'THE PASSWORD WAS HERE!'
     parse_users = ['tigerbeer', 'slicebeer', 'mexicalibeer']
     graphql_url = 'https://www.instagram.com/graphql/query/?'
