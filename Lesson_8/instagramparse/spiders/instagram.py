@@ -13,8 +13,8 @@ class InstagramSpider(scrapy.Spider):
     start_urls = ['https://www.instagram.com/']
 
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
-    inst_login = 'shapeshine1'
-    inst_password = '#PWD_INSTAGRAM_BROWSER:10:1609592112:ATRQACl1Tw1OYvME2O9KgmoYWl4dmZabHLHbhmd0XaODFT8bdYnRAaqKy89o/RwdnkhieFXQ+BnQyx7JU0PmtSvtRQju5NBYckZp81CP7WI1UnPALjxUQ9DGNFtakVhI2pMlcQOBAmuQ/DEhGnRvog=='
+    inst_login = 'THE LOGIN WA HERE!'
+    inst_password = 'THE PASSWORD WAS HERE!'
     parse_users = ['tigerbeer', 'slicebeer', 'mexicalibeer']
     graphql_url = 'https://www.instagram.com/graphql/query/?'
     subscribers_hash = 'c76146de99bb02f6415203be841dd25a'
