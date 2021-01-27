@@ -28,7 +28,7 @@ driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=chrome_o
 driver.get('https://mail.ru')
 
 elem = driver.find_element_by_class_name('email-input')
-elem.send_keys('study.ai_172@mail.ru')
+elem.send_keys('HERE_WAS_LOGIN')
 button = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'button'))
         )
@@ -37,7 +37,7 @@ button.click()
 elem = WebDriverWait(driver,10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'password-input'))
         )
-elem.send_keys('NextPassword172')
+elem.send_keys('HERE_WAS_PASSWORD')
 button = WebDriverWait(driver,10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, 'second-button'))
         )
